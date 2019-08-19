@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fd927117a87c98ef94d431fab931c87d",
+    "content-hash": "983f884482e5f6c4edf5dc3b952824f1",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1901,6 +1901,22 @@
                 "mailer"
             ],
             "time": "2019-04-21T09:21:45+00:00"
+        },
+        {
+            "name": "symfony/apache-pack",
+            "version": "v1.0.1",
+            "dist": {
+                "type": "zip",
+                "url": "http://10.35.0.20:8081/repository/composer-proxy-packagist.org/symfony/apache-pack/v1.0.1/symfony-apache-pack-v1.0.1.zip",
+                "reference": "3aa5818d73ad2551281fc58a75afd9ca82622e6c",
+                "shasum": ""
+            },
+            "type": "symfony-pack",
+            "license": [
+                "MIT"
+            ],
+            "description": "A pack for Apache support in Symfony",
+            "time": "2017-12-12T01:46:35+00:00"
         },
         {
             "name": "symfony/asset",

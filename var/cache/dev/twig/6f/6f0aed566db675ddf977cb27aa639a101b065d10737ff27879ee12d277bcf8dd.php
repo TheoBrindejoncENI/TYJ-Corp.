@@ -71,6 +71,6 @@ class __TwigTemplate_5a39bfe2653819e2cb4c10fc4958fc14cc9af52790cc2331b6a2ce97478
 <?php else: ?>
 <?php echo \$view['form']->block(\$form, 'choice_widget_collapsed') ?>
 <?php endif ?>
-", "@Framework/Form/choice_widget.html.php", "D:\\projet\\vendor\\symfony\\framework-bundle\\Resources\\views\\Form\\choice_widget.html.php");
+", "@Framework/Form/choice_widget.html.php", "D:\\TYJCorp\\vendor\\symfony\\framework-bundle\\Resources\\views\\Form\\choice_widget.html.php");
     }
 }

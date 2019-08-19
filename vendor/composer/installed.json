@@ -2053,6 +2053,24 @@
         ]
     },
     {
+        "name": "symfony/apache-pack",
+        "version": "v1.0.1",
+        "version_normalized": "1.0.1.0",
+        "dist": {
+            "type": "zip",
+            "url": "http://10.35.0.20:8081/repository/composer-proxy-packagist.org/symfony/apache-pack/v1.0.1/symfony-apache-pack-v1.0.1.zip",
+            "reference": "3aa5818d73ad2551281fc58a75afd9ca82622e6c",
+            "shasum": ""
+        },
+        "time": "2017-12-12T01:46:35+00:00",
+        "type": "symfony-pack",
+        "installation-source": "dist",
+        "license": [
+            "MIT"
+        ],
+        "description": "A pack for Apache support in Symfony"
+    },
+    {
         "name": "symfony/asset",
         "version": "v3.4.30",
         "version_normalized": "3.4.30.0",
