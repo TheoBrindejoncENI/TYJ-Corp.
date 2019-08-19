@@ -53,6 +53,7 @@ final class Versions
   'psr/simple-cache' => '1.0.1@408d5eafb83c57f6365a3ca330ff23aa4a5fa39b',
   'sensio/framework-extra-bundle' => 'v5.4.1@585f4b3a1c54f24d1a8431c729fc8f5acca20c8a',
   'swiftmailer/swiftmailer' => 'v6.2.1@5397cd05b0a0f7937c47b0adcb4c60e5ab936b6a',
+  'symfony/apache-pack' => 'v1.0.1@3aa5818d73ad2551281fc58a75afd9ca82622e6c',
   'symfony/asset' => 'v3.4.30@0999874d3e72b3440f757797e60c3f48bb8a4482',
   'symfony/cache' => 'v3.4.30@8c6e162f0f7626771edbfa0a0e45b46623bbae1c',
   'symfony/class-loader' => 'v3.4.30@4459eef5298dedfb69f771186a580062b8516497',
