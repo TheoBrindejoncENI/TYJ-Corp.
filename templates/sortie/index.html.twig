@@ -20,8 +20,8 @@
             <tr>
                 <td>{{ sortie.nom }}</td>
                 <td>{{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('d/m/Y H:i') : '' }}</td>
-                <td>{{ sortie.duree }}</td>
-                <td>{{ sortie.getInscrits() }}/{{ sortie.nbInscriptionsMax }}</td>
+                <td>{{ sortie.duree }} min.</td>
+                <td>/{{ sortie.nbInscriptionsMax ? sortie.nbInscriptionsMax : '&infin;' }}</td>
                 <td>
                     <a class="btn btn-sm btn-outline-primary" href="{{ path('sortie_show', {'id': sortie.id}) }}">Voir</a>
                 </td>
