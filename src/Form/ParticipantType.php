@@ -12,15 +12,12 @@ class ParticipantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom')
-            ->add('prenom')
-            ->add('telephone')
-            ->add('mail')
-            ->add('isAdmin')
-            ->add('isActif')
-            ->add('motDePasse')
-            ->add('site')
-            ->add('inscriptions')
+            ->add('nom', null, ["attr" => ["class" => "form-control", "placeholder" => "Votre nom"]])
+            ->add('prenom', null, ["attr" => ["class" => "form-control", "placeholder" => "Votre prénom"]])
+            ->add('telephone', null, ["attr" => ["class" => "form-control", "placeholder" => "Votre numéro de téléphone"]])
+            ->add('mail', null, ["attr" => ["class" => "form-control", "placeholder" => "Votre adresse email"]])
+            ->add('motDePasse', null, ["attr" => ["class" => "form-control", "placeholder" => "Votre mot de passe"]])
+            ->add('site', null, ["attr" => ["class" => "form-control"]])
         ;
     }
 

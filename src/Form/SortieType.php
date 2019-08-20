@@ -21,8 +21,6 @@ class SortieType extends AbstractType
             ->add('etat')
             ->add('lieu')
             ->add('site')
-            ->add('organisateur')
-            ->add('inscrits')
         ;
     }
 
