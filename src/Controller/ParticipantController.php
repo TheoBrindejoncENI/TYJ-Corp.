@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/participant")
@@ -27,14 +28,19 @@ class ParticipantController extends Controller
 
     /**
      * @Route("/new", name="participant_new", methods={"GET","POST"})
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $pwdEncoder
+     * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, UserPasswordEncoderInterface $pwdEncoder): Response
     {
         $participant = new Participant();
         $form = $this->createForm(ParticipantType::class, $participant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $pwd = $pwdEncoder->encodePassword($participant, $participant->getMotDePasse());
+            $participant->setMotDePasse($pwd);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($participant);
             $entityManager->flush();
