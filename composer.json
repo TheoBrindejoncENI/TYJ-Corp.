@@ -23,10 +23,11 @@
         "symfony/serializer-pack": "*",
         "symfony/swiftmailer-bundle": "^3.1",
         "symfony/translation": "*",
-        "symfony/twig-bundle": "*",
+        "symfony/twig-bundle": "3.4.*",
         "symfony/validator": "*",
         "symfony/web-link": "*",
         "symfony/web-server-bundle": "3.4.*",
+        "symfony/webpack-encore-bundle": "^1.6",
         "symfony/yaml": "*"
     },
     "require-dev": {
@@ -65,10 +66,12 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "yarn"
         ],
         "post-update-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "yarn"
         ]
     },
     "conflict": {
