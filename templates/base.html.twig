@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-@import
 <html>
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="'css/global.scss'">
-
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <title>{% block title %}Sortir.com{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
@@ -14,8 +12,6 @@
 
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
                 <div class="container">
-                    <img height="40px" width="40px" src=""
-                         class="float-left img-fluid mr-3" alt="Logo" />
                     <a class="navbar-brand" href="">Sortir.com</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -24,11 +20,11 @@
                         <ul class="navbar-nav ml-auto">
 
                             <li class="nav-item active"><a class="nav-link"
-                                                           href=""><i class="fas fa-sign-in-alt"></i> Connexion<span class="sr-only"></span>
+                                                           href="{{ path('login') }}"><i class="fas fa-sign-in-alt"></i> Connexion<span class="sr-only"></span>
                                 </a></li>
 
                             <li class="nav-item active"><a class="nav-link"
-                                                           href="">Inscription<span class="sr-only"></span>
+                                                           href="{{ path('participant_new') }}">Inscription<span class="sr-only"></span>
                                 </a></li>
 
                             <li class="nav-item active"><a class="nav-link"
@@ -36,7 +32,7 @@
                                 </a></li>
 
                             <li class="nav-item active"><a class="nav-link"
-                                                           href="">Les sorties <span class="sr-only"></span>
+                                                           href="{{ path('sortie_index') }}">Les sorties <span class="sr-only"></span>
                                 </a></li>
 
                             <li class="nav-item active"><a class="nav-link"
@@ -44,19 +40,19 @@
                                 </a></li>
 
                             <li class="nav-item active"><a class="nav-link"
-                                                           href="">Deconnexion <i class="fas fa-sign-out-alt"></i><span class="sr-only"></span>
+                                                           href="{{ path('logout') }}">Deconnexion <i class="fas fa-sign-out-alt"></i><span class="sr-only"></span>
                                 </a></li>
                         </ul>
                     </div>
                 </div>
             </nav>
-            </div>
         </div>
-        <div class="container sticky-offset">
-            {% endblock %}
     </header>
+    {% endblock %}
     <body>
-        {% block body %}{% endblock %}
+        <div class="container" style="margin-top: 56px;">
+            {% block body %}{% endblock %}
+        </div>
         {% block javascripts %}{% endblock %}
     </body>
 
