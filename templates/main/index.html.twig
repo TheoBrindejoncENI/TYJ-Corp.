@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <div class="jumbotron text-white">
+        <div class="row">
+            <div class="col-md-7">
+                <h1>Bienvenue {% if app.user %}{{ app.user.prenom }}{% endif %} !</h1>
+                <h4>Il est temps d'arrêter de jouer à Fortnite et de se faire des amis !</h4>
+                <br />
+                {% if app.user %}
+                    <a href="{{ path('sortie_index') }}" class="btn btn-primary">Trouver une sortie !</a>
+                {% else %}
+                    <a href="{{ path('login') }}" class="btn btn-primary">Connexion</a>
+                    <a href="{{ path('participant_new') }}" class="btn btn-light">Inscription</a>
+                {% endif %}
+            </div>
+            <div class="col-md-5">
+                <img class="img-fluid" src="{{ asset('img/hangout.svg') }}" alt="Sortir">
+            </div>
+        </div>
+    </div>
+{% endblock %}

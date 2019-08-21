@@ -9,7 +9,7 @@
         "ext-iconv": "*",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/apache-pack": "^1.0",
-        "symfony/asset": "*",
+        "symfony/asset": "3.4.*",
         "symfony/console": "*",
         "symfony/dotenv": "*",
         "symfony/expression-language": "*",
@@ -19,11 +19,11 @@
         "symfony/monolog-bundle": "^3.1",
         "symfony/orm-pack": "*",
         "symfony/process": "*",
-        "symfony/security-bundle": "*",
+        "symfony/security-bundle": "3.4.*",
         "symfony/serializer-pack": "*",
         "symfony/swiftmailer-bundle": "^3.1",
         "symfony/translation": "*",
-        "symfony/twig-bundle": "*",
+        "symfony/twig-bundle": "3.4.*",
         "symfony/validator": "*",
         "symfony/web-link": "*",
         "symfony/web-server-bundle": "3.4.*",
@@ -65,10 +65,12 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "yarn"
         ],
         "post-update-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "yarn"
         ]
     },
     "conflict": {

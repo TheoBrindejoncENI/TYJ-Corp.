@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-5">
+            <img class="img-fluid" src="{{ asset('img/login.png') }}" alt="Connexion">
+        </div>
+        <div class="col-md-7">
+            <br />
+            <h1>Connexion</h1>
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            <form action="{{ path('login') }}" method="post">
+                <label for="username">Adresse email :</label>
+                <input placeholder="Mon adresse email" class="form-control" type="email" id="username" name="_username" value="{{ last_username }}"/>
+                <br />
+                <label for="password">Mot de passe :</label>
+                <input placeholder="Mon mot de passe" class="form-control" type="password" id="password" name="_password"/>
+                <br />
+                <input type="checkbox" id="remember_me" name="_remember_me" checked/>
+                <label for="remember_me">Se souvenir de moi</label>
+                {#
+                    If you want to control the URL the user
+                    is redirected to on success (more details below)
+                    <input type="hidden" name="_target_path" value="/account"/>
+                #}
+                <br />
+                <button class="btn btn-primary" type="submit">Connexion</button>
+                <a class="btn btn-default" href="{{ path('participant_new') }}">Inscription</a>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

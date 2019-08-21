@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Participant{% endblock %}
+
+{% block body %}
+    <h1>Profil de {{ participant.prenom }} {{ participant.nom }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom</th>
+                <td>{{ participant.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ participant.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ participant.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Adresse email</th>
+                <td>{{ participant.mail }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% if app.user and participant.id == app.user.id %}
+    <a class="btn btn-primary" href="{{ path('participant_edit', {'id': participant.id}) }}">Modifier</a>
+    {% endif %}
+{% endblock %}

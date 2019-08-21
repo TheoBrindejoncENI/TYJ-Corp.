@@ -1,0 +1,16 @@
+.sticky-offset {
+    margin-top: 80px;
+}
+
+.jumbotron {
+    background: rgb(0,212,255);
+    background: linear-gradient(90deg, rgb(36, 199, 132) 7%, rgb(173, 225, 231) 45%, rgba(255,255,255,1) 100%);
+}
+
+#map {
+    height: 300px;
+}
+
+h1, .logo {
+    font-family: 'Farro', sans-serif;
+}

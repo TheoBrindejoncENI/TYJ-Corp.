@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    <h1>Inscription</h1>
+
+    <div class="row">
+        <div class="col-md-7">
+            {{ include('participant/_form.html.twig') }}
+        </div>
+        <div class="col-md-5">
+            <img class="img-fluid" src="{{ asset('img/inscription.png') }}" alt="Inscription">
+        </div>
+    </div>
+{% endblock %}
