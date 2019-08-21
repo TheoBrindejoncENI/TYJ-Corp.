@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\SortieType;
 use App\Repository\SortieRepository;
@@ -60,6 +61,38 @@ class SortieController extends Controller
     }
 
     /**
+     * @Route("/{id}/join", name="sortie_join", methods={"GET"})
+     * @param Sortie $sortie
+     * @return Response
+     */
+    public function join(Sortie $sortie): Response
+    {
+        if ($this->getUser()) {
+            $sortie->addInscrit($this->getUser());
+            $this->getDoctrine()->getManager()->flush();
+        }
+        return $this->render('sortie/show.html.twig', [
+            'sortie' => $sortie,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/leave", name="sortie_leave", methods={"GET"})
+     * @param Sortie $sortie
+     * @return Response
+     */
+    public function leave(Sortie $sortie): Response
+    {
+        if ($this->getUser()) {
+            $sortie->removeInscrit($this->getUser());
+            $this->getDoctrine()->getManager()->flush();
+        }
+        return $this->render('sortie/show.html.twig', [
+            'sortie' => $sortie,
+        ]);
+    }
+
+    /**
      * @Route("/{id}/edit", name="sortie_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Sortie $sortie): Response
@@ -85,9 +118,8 @@ class SortieController extends Controller
     public function delete(Request $request, Sortie $sortie): Response
     {
         if ($this->isCsrfTokenValid('delete'.$sortie->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($sortie);
-            $entityManager->flush();
+            $sortie->setEtat(new Etat());
+            $this->getDoctrine()->getManager()->flush();
         }
 
         return $this->redirectToRoute('sortie_index');
