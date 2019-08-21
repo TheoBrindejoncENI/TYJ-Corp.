@@ -3,10 +3,13 @@
 /.env.local
 /.env.local.php
 /.env.*.local
+/.env.$DATABASE_URL.local
 /public/bundles/
 /var/
 /vendor/
 /.idea/
+/.composer.json.local
+/.composer.lock.local
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
@@ -25,3 +28,4 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+

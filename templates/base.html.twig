@@ -21,7 +21,7 @@
                         <ul class="navbar-nav ml-auto">
                             {% if app.user %}
                                 <li class="nav-item active"><a class="nav-link"
-                                                               href="">Mon profil <span class="sr-only"></span>
+                                                               href="{{ path('participant_show', {'id': participant.id}) }}">Mon profil <span class="sr-only"></span>
                                     </a></li>
 
                                 <li class="nav-item active"><a class="nav-link"
