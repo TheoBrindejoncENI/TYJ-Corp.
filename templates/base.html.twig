@@ -2,8 +2,10 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+        <link href="https://fonts.googleapis.com/css?family=Farro&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/bb0f7a1ce9.js"></script>
         <title>{% block title %}Sortir.com{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
@@ -13,7 +15,7 @@
 
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
                 <div class="container">
-                    <a class="navbar-brand" href="{{ path('home') }}">Sortir.com</a>
+                    <a class="navbar-brand logo" href="{{ path('home') }}"><i class="fas fa-user-friends"></i> Sortir.com</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -21,7 +23,7 @@
                         <ul class="navbar-nav ml-auto">
                             {% if app.user %}
                                 <li class="nav-item active"><a class="nav-link"
-                                                               href="">Mon profil <span class="sr-only"></span>
+                                                               href="{{ path('participant_show', {'id': app.user.id}) }}">Mon profil <span class="sr-only"></span>
                                     </a></li>
 
                                 <li class="nav-item active"><a class="nav-link"
@@ -33,7 +35,7 @@
                                     </a></li>
                                 {% endif %}
                                 <li class="nav-item active"><a class="nav-link"
-                                                               href="{{ path('logout') }}">Deconnexion <i class="fas fa-sign-out-alt"></i><span class="sr-only"></span>
+                                                               href="{{ path('logout') }}">Déconnexion <i class="fas fa-sign-out-alt"></i><span class="sr-only"></span>
                                     </a></li>
                             {% else %}
                                 <li class="nav-item active"><a class="nav-link"
@@ -56,13 +58,13 @@
             {% block body %}{% endblock %}
         </div>
         {% block javascripts %}{% endblock %}
+        <br />
+        <footer class="custom-foot bg-secondary">
+            {% block footer %}
+                <div class="container">
+                    <div class="text-center py-3 text-white">Copyright &copy; Sortir.com est une réalisation exceptionnelle de la TYJ Corp. Tous droits réservés.</div>
+                </div>
+            {% endblock %}
+        </footer>
     </body>
-
-    <footer class="custom-foot bg-secondary">
-        {% block footer %}
-        <div class="container">
-            <div class="text-center py-3 text-white">Copyright &copy; Sortir.com est une réalisation exceptionnelle de la TYJ Corp. Tous droits réservés.</div>
-        </div>
-        {% endblock %}
-    </footer>
 </html>

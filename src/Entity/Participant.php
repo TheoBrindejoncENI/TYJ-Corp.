@@ -303,4 +303,11 @@ class Participant implements UserInterface
     {
         // TODO: Implement eraseCredentials() method.
     }
+
+    public function __toString()
+    {
+        return $this->prenom . " " . $this->nom;
+    }
+
+
 }

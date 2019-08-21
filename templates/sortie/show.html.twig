@@ -3,44 +3,71 @@
 {% block title %}Sortie{% endblock %}
 
 {% block body %}
-    <h1>Sortie</h1>
+    <div class="float-right">
+        <a class="btn btn-success" href="#"><i class="fas fa-check"></i> Je m'inscris !</a>
+        <a class="btn btn-primary" href="{{ path('sortie_edit', {'id': sortie.id}) }}">Modifier la sortie</a>
+    </div>
+    <h1>{{ sortie.nom }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ sortie.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ sortie.nom }}</td>
-            </tr>
-            <tr>
-                <th>DateHeureDebut</th>
-                <td>{{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Duree</th>
-                <td>{{ sortie.duree }}</td>
-            </tr>
-            <tr>
-                <th>DateLimiteInscription</th>
-                <td>{{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>NbInscriptionsMax</th>
-                <td>{{ sortie.nbInscriptionsMax }}</td>
-            </tr>
-            <tr>
-                <th>InfosSortie</th>
-                <td>{{ sortie.infosSortie }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Organisé par</th>
+                    <td><a href="{{ path('participant_show', {'id': sortie.getOrganisateur().id}) }}">{{ sortie.getOrganisateur() }}</a></td>
+                </tr>
+                <tr>
+                    <th>Quand ?</th>
+                    <td>{{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('d/m/Y H:i') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Durée</th>
+                    <td>{{ sortie.duree }} minutes</td>
+                </tr>
+                <tr>
+                    <th>Date limite d'inscription</th>
+                    <td>{{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('d/m/Y H:i') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Maximum de participants</th>
+                    <td>{{ sortie.nbInscriptionsMax }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h4>Détails</h4>
+            <p>{{ sortie.infosSortie }}</p>
+            <h4>Participants</h4>
+            {% for participant in sortie.getInscrits() %}
+                <a href="{{ path('participant_show', {'id': participant.id}) }}">{{ participant }}</a>
+            {% else %}
+                <p>Aucun participant pour le moment !</p>
+            {% endfor %}
+        </div>
+    </div>
 
-    <a href="{{ path('sortie_index') }}">back to list</a>
-
-    <a href="{{ path('sortie_edit', {'id': sortie.id}) }}">edit</a>
-
-    {{ include('sortie/_delete_form.html.twig') }}
+    <div class="row">
+        <div class="col-md-6">
+            <div id="map"></div>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCi6mUxuH2NJzWGtVAjd8N_YXlKrsERVks&callback=initMap"
+                    async defer></script>
+            <script>
+                var map;
+                function initMap() {
+                    map = new google.maps.Map(document.getElementById('map'), {
+                        center: {lat: {{sortie.getLieu().getLatitude()}}, lng: {{sortie.getLieu().getLongitude()}}},
+                        zoom: 14
+                    });
+                }
+            </script>
+        </div>
+        <div class="col-md-6">
+            <h4>Localisation</h4>
+            <p>{{sortie.getLieu()}}<br />{{ sortie.getLieu().getRue() }}<br />{{ sortie.getLieu().getVille() }}</p>
+        </div>
+    </div>
+    <br />
 {% endblock %}

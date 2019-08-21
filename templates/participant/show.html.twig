@@ -25,4 +25,7 @@
             </tr>
         </tbody>
     </table>
+    {% if app.user and participant.id == app.user.id %}
+    <a class="btn btn-primary" href="{{ path('participant_edit', {'id': participant.id}) }}">Modifier</a>
+    {% endif %}
 {% endblock %}
