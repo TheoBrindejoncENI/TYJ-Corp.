@@ -1,3 +1,8 @@
 .sticky-offset {
     margin-top: 80px;
 }
+
+.jumbotron {
+    background: rgb(0,212,255);
+    background: linear-gradient(90deg, rgba(0,212,255,1) 7%, rgba(212,198,231,1) 45%, rgba(255,255,255,1) 100%);
+}

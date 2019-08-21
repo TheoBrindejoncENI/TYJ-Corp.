@@ -41,6 +41,8 @@ class ParticipantController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $pwd = $pwdEncoder->encodePassword($participant, $participant->getMotDePasse());
             $participant->setMotDePasse($pwd);
+            $participant->setIsAdmin(false);
+            $participant->setIsActif(true);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($participant);
             $entityManager->flush();
