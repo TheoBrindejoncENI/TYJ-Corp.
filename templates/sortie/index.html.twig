@@ -1,19 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Sortie index{% endblock %}
+{% block title %}Sortons !!{% endblock %}
 
 {% block body %}
     <script src="{{ asset('js/filterTable.js')}}"></script>
     
-    <h1>Les sorties disponibles</h1>
+    <h1>Sortons !!</h1>
     <br>
-    <span>Filtrez les sorties :<span>
+    <h3>Filtrez les sorties :</h3>
     <br>
     <div class="row">
             <div class="col">
                 <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="inputGroupSelect01">Site</label>
+                        <span class="input-group-text" for="inputGroupSelect01">Site :</span>
+                    </div>
                     <select class="custom-select" id="searchSite" aria-label="Cherchez sur un site" id="inputGroupSelect01">
                         <option selected>Choix...</option>
                     {% for site in sites %}
@@ -22,7 +23,6 @@
                         <option option>Pas de site</option>
                     {% endfor %}
                     </select>
-                    </div>
                 </div>
                 <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
@@ -30,12 +30,33 @@
                     </div>
                         <input type="text" class="form-control" name="searchInput" id="searchInput" onkeyup="searchinTable()" aria-label="Cherchez une sortie" aria-describedby="inputGroup-sizing-sm">
                 </div>
+                <div class='row'>
+                    <div class='col'>
+                        <span>De :</span>
+                        <div class="form-group">
+                        <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker7"/>
+                                <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col'>
+                        <span>à</span>
+                        <div class="form-group">
+                        <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker8"/>
+                                <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
                 <div class="col">
-                    2 of 3
-                </div>
-                <div class="col">
-                    3 of 3
+                    2 of 2
                 </div>
             </div>
         </div>
@@ -57,7 +78,7 @@
                 <td>{{ sortie.nom }}</td>
                 <td>{{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('d/m/Y H:i') : '' }}</td>
                 <td>{{ sortie.duree }} min.</td>
-                <td>{{ sortie.nbInscriptionsMax ? sortie.nbInscriptionsMax : '&infin;' }}</td>
+                <td>{{ sortie.inscrits|length}}/{{ sortie.nbInscriptionsMax ?? '&infin;' }}</td>
                 <td>
                     <a class="btn btn-sm btn-outline-primary" href="{{ path('sortie_show', {'id': sortie.id}) }}">Voir</a>
                 </td>
