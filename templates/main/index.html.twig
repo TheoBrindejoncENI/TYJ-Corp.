@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-md-7">
                 <h1>Bienvenue {% if app.user %}{{ app.user.prenom }}{% endif %} !</h1>
-                <p class="lead">Il est temps d'arrêter de jouer à Fortnite et de se faire des amis !</p>
+                <h4>Il est temps d'arrêter de jouer à Fortnite et de se faire des amis !</h4>
                 <br />
                 {% if app.user %}
                     <a href="{{ path('sortie_index') }}" class="btn btn-primary">Trouver une sortie !</a>
