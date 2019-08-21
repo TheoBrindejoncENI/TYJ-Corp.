@@ -22,6 +22,7 @@ class SortieController extends Controller
     {
         return $this->render('sortie/index.html.twig', [
             'sorties' => $sortieRepository->findAll(),
+            'participant' => $this->getUser(),
         ]);
     }
 
@@ -46,6 +47,7 @@ class SortieController extends Controller
         return $this->render('sortie/new.html.twig', [
             'sortie' => $sortie,
             'form' => $form->createView(),
+            'participant' => $this->getUser(),
         ]);
     }
 
@@ -56,6 +58,7 @@ class SortieController extends Controller
     {
         return $this->render('sortie/show.html.twig', [
             'sortie' => $sortie,
+            'participant' => $this->getUser(),
         ]);
     }
 
