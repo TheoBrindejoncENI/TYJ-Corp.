@@ -12,15 +12,15 @@ class SortieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom')
-            ->add('dateHeureDebut')
-            ->add('duree')
-            ->add('dateLimiteInscription')
-            ->add('nbInscriptionsMax')
-            ->add('infosSortie')
-            ->add('etat')
-            ->add('lieu')
-            ->add('site')
+            ->add('nom', null, ["attr" => ["class" => "form-control", "placeholder" => "Titre de la sortie"]])
+            ->add('dateHeureDebut', null, ["attr" => ["class" => "form-control", "placeholder" => "Date et heure du début de la sortie"],'widget' => "single_text"])
+            ->add('duree', null, ["attr" => ["class" => "form-control", "placeholder" => "Durée de la sortie"]])
+            ->add('dateLimiteInscription', null, ["attr" => ["class" => "form-control", "placeholder" => "Date limite d'inscription"], 'widget' => "single_text"])
+            ->add('nbInscriptionsMax', null, ["attr" => ["class" => "form-control", "placeholder" => "Nombre de place"]])
+            ->add('infosSortie', null, ["attr" => ["class" => "form-control", "placeholder" => "Description"]])
+            ->add('etat', null, ["attr" => ["class" => "form-control", "placeholder" => "Statut"]])
+            ->add('lieu', null, ["attr" => ["class" => "form-control", "placeholder" => "Lieu de la sortie"]])
+            ->add('site', null, ["attr" => ["class" => "form-control", "placeholder" => "Site de la sortie"]])
         ;
     }
 

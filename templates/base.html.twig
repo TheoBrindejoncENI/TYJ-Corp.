@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <title>{% block title %}Sortir.com{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/png" href="{{ asset('img/sortir.png') }}" />
     </head>
     <header>
         {% block header %}
@@ -34,6 +35,10 @@
 
                             <li class="nav-item active"><a class="nav-link"
                                                            href="{{ path('sortie_index') }}">Les sorties <span class="sr-only"></span>
+                                </a></li>
+
+                            <li class="nav-item active"><a class="nav-link"
+                                                           href="{{ path('sortie_new') }}">Créer une sortie <span class="sr-only"></span>
                                 </a></li>
 
                             <li class="nav-item active"><a class="nav-link"
