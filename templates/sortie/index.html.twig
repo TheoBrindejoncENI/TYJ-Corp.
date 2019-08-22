@@ -5,7 +5,7 @@
 {% block body %}
     <script src="{{ asset('js/filterTable.js')}}"></script>
     
-    <h1>Sortons !!</h1>
+    <h1>Explorer les sorties</h1>
     <br>
     <h3>Filtrez les sorties :</h3>
     <br>
@@ -16,11 +16,10 @@
                         <span class="input-group-text" for="inputGroupSelect01">Site :</span>
                     </div>
                     <select class="custom-select" id="searchSite" aria-label="Cherchez sur un site" id="inputGroupSelect01">
-                        <option selected>{{ participant.site }}</option>
                     {% for site in sites %}
-                            <option selected>{{ site.nom }}</option>
+                            <option {{ app.user and app.user.site.id == site.id ? "selected" : "" }}>{{ site.nom }}</option>
                     {% else %}
-                        <option option>Pas de site</option>
+                        <option>Pas de site</option>
                     {% endfor %}
                     </select>
                 </div>

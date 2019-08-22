@@ -7,6 +7,7 @@ use App\Entity\Sortie;
 use App\Form\SortieType;
 use App\Repository\SortieRepository;
 use App\Repository\SiteRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +22,9 @@ class SortieController extends Controller
 {
     /**
      * @Route("/", name="sortie_index", methods={"GET"})
+     * @param SortieRepository $sortieRepository
+     * @param SiteRepository $siteRepository
+     * @return Response
      */
     public function index(SortieRepository $sortieRepository,SiteRepository $siteRepository): Response
     {
@@ -33,6 +37,9 @@ class SortieController extends Controller
 
     /**
      * @Route("/new", name="sortie_new", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_USER')")
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -58,6 +65,8 @@ class SortieController extends Controller
 
     /**
      * @Route("/{id}", name="sortie_show", methods={"GET"})
+     * @param Sortie $sortie
+     * @return Response
      */
     public function show(Sortie $sortie): Response
     {
@@ -70,6 +79,7 @@ class SortieController extends Controller
 
     /**
      * @Route("/{id}/join", name="sortie_join", methods={"GET"})
+     * @Security("is_granted('ROLE_USER')")
      * @param Sortie $sortie
      * @return Response
      */
@@ -86,6 +96,7 @@ class SortieController extends Controller
 
     /**
      * @Route("/{id}/leave", name="sortie_leave", methods={"GET"})
+     * @Security("is_granted('ROLE_USER')")
      * @param Sortie $sortie
      * @return Response
      */
@@ -102,9 +113,16 @@ class SortieController extends Controller
 
     /**
      * @Route("/{id}/edit", name="sortie_edit", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_USER')")
+     * @param Request $request
+     * @param Sortie $sortie
+     * @return Response
      */
     public function edit(Request $request, Sortie $sortie): Response
     {
+        if ($this->getUser()->getId() != $sortie->getOrganisateur()->getId()) {
+            return $this->redirectToRoute('sortie_show', ["id" => $sortie->getId()]);
+        }
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
@@ -122,9 +140,16 @@ class SortieController extends Controller
 
     /**
      * @Route("/{id}", name="sortie_delete", methods={"DELETE"})
+     * @Security("is_granted('ROLE_USER')")
+     * @param Request $request
+     * @param Sortie $sortie
+     * @return Response
      */
     public function delete(Request $request, Sortie $sortie): Response
     {
+        if ($this->getUser()->getId() != $sortie->getOrganisateur()->getId()) {
+            return $this->redirectToRoute('sortie_show', ["id" => $sortie->getId()]);
+        }
         if ($this->isCsrfTokenValid('delete'.$sortie->getId(), $request->request->get('_token'))) {
             $sortie->setEtat(new Etat());
             $this->getDoctrine()->getManager()->flush();

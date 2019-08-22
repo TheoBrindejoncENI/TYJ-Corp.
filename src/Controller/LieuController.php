@@ -19,6 +19,8 @@ class LieuController extends Controller
     /**
      * @Route("/", name="lieu_index", methods={"GET"})
      * @Security("is_granted('ROLE_ADMIN')")
+     * @param LieuRepository $lieuRepository
+     * @return Response
      */
     public function index(LieuRepository $lieuRepository): Response
     {
@@ -30,6 +32,8 @@ class LieuController extends Controller
     /**
      * @Route("/new", name="lieu_new", methods={"GET","POST"})
      * @Security("is_granted('ROLE_USER')")
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -54,6 +58,8 @@ class LieuController extends Controller
     /**
      * @Route("/{id}", name="lieu_show", methods={"GET"})
      * @Security("is_granted('ROLE_ADMIN')")
+     * @param Lieu $lieu
+     * @return Response
      */
     public function show(Lieu $lieu): Response
     {
@@ -65,6 +71,9 @@ class LieuController extends Controller
     /**
      * @Route("/{id}/edit", name="lieu_edit", methods={"GET","POST"})
      * @Security("is_granted('ROLE_ADMIN')")
+     * @param Request $request
+     * @param Lieu $lieu
+     * @return Response
      */
     public function edit(Request $request, Lieu $lieu): Response
     {
@@ -86,6 +95,9 @@ class LieuController extends Controller
     /**
      * @Route("/{id}", name="lieu_delete", methods={"DELETE"})
      * @Security("is_granted('ROLE_ADMIN')")
+     * @param Request $request
+     * @param Lieu $lieu
+     * @return Response
      */
     public function delete(Request $request, Lieu $lieu): Response
     {

@@ -37,7 +37,6 @@ security:
     access_control:
         - { path: ^/ville, roles: ROLE_ADMIN }
         - { path: ^/site, roles: ROLE_ADMIN }
-        - { path: ^/sortie/new, roles: ROLE_USER }
 
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
