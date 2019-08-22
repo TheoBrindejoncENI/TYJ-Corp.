@@ -19,13 +19,16 @@ function searchinTable() {
       } 
     }
   }
-  $(function () {
-    $('#datetimepicker7').datetimepicker({
+  $(document).ready(function () {
+    $(function(){
+      $('#datetimepicker7').datetimepicker({
       format: 'L',
-      useCurrent: true
+      useCurrent: true,
+      locale: 'FR'
     });
     $('#datetimepicker8').datetimepicker({
-        format: 'L'
+        format: 'L',
+        locale: 'FR'
     });
     $("#datetimepicker7").on("change.datetimepicker", function (e) {
         $('#datetimepicker8').datetimepicker('minDate', e.date);
@@ -33,4 +36,5 @@ function searchinTable() {
     $("#datetimepicker8").on("change.datetimepicker", function (e) {
         $('#datetimepicker7').datetimepicker('maxDate', e.date);
     });
+  });
 });
