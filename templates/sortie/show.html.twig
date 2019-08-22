@@ -9,10 +9,13 @@
                 <a class="btn btn-success" href="{{ path('sortie_join', {'id': sortie.id}) }}"><i class="fas fa-check"></i> Je m'inscris !</a>
             {% endif %}
             {% if app.user in sortie.getInscrits() %}
-            <a class="btn btn-danger" href="{{ path('sortie_leave', {'id': sortie.id}) }}"><i class="fas fa-times"></i> Je me désiste</a>
+                <a class="btn btn-danger" href="{{ path('sortie_leave', {'id': sortie.id}) }}"><i class="fas fa-times"></i> Je me désiste</a>
             {% endif %}
             {% if app.user.id == sortie.getOrganisateur().id %}
-            <a class="btn btn-primary" href="{{ path('sortie_edit', {'id': sortie.id}) }}">Modifier la sortie</a>
+                {% if sortie.getEtat().getId() == 1 %}
+                    <a class="btn btn-success" href="{{ path('sortie_publish', {'id': sortie.id}) }}">Publier la sortie</a>
+                {% endif %}
+                <a class="btn btn-primary" href="{{ path('sortie_edit', {'id': sortie.id}) }}">Modifier la sortie</a>
             {% endif %}
         {% endif %}
     </div>

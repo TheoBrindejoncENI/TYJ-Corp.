@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\SortieType;
+use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use App\Repository\SiteRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -49,11 +50,15 @@ class SortieController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $sortie->setOrganisateur($this->getUser());
+            $etat = $this->getDoctrine()
+                ->getRepository(Etat::class)
+                ->find(1); //créée
+            $sortie->setEtat($etat);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($sortie);
             $entityManager->flush();
 
-            return $this->redirectToRoute('sortie_index', ['id' => $sortie->getId()]);
+            return $this->redirectToRoute('sortie_show', ['id' => $sortie->getId()]);
         }
 
         return $this->render('sortie/new.html.twig', [
@@ -74,6 +79,27 @@ class SortieController extends Controller
             'sortie' => $sortie,
             'participant' => $this->getUser(),
 
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/publish", name="sortie_publish", methods={"GET"})
+     * @Security("is_granted('ROLE_USER')")
+     * @param Sortie $sortie
+     * @return Response
+     */
+    public function publish(Sortie $sortie): Response
+    {
+        if ($this->getUser()->getId() != $sortie->getOrganisateur()->getId()) {
+            return $this->redirectToRoute('sortie_show', ["id" => $sortie->getId()]);
+        }
+        $etat = $this->getDoctrine()
+            ->getRepository(Etat::class)
+            ->find(2); //ouverte
+        $sortie->setEtat($etat);
+        $this->getDoctrine()->getManager()->flush();
+        return $this->render('sortie/show.html.twig', [
+            'sortie' => $sortie,
         ]);
     }
 
@@ -151,7 +177,10 @@ class SortieController extends Controller
             return $this->redirectToRoute('sortie_show', ["id" => $sortie->getId()]);
         }
         if ($this->isCsrfTokenValid('delete'.$sortie->getId(), $request->request->get('_token'))) {
-            $sortie->setEtat(new Etat());
+            $etat = $this->getDoctrine()
+                ->getRepository(Etat::class)
+                ->find(6); //annulée
+            $sortie->setEtat($etat);
             $this->getDoctrine()->getManager()->flush();
         }
 
