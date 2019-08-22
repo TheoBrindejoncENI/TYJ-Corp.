@@ -46,7 +46,7 @@ class SortieController extends Controller
             $entityManager->persist($sortie);
             $entityManager->flush();
 
-            return $this->redirectToRoute('sortie_index');
+            return $this->redirectToRoute('sortie_index', ['id' => $sortie->getId()]);
         }
 
         return $this->render('sortie/new.html.twig', [

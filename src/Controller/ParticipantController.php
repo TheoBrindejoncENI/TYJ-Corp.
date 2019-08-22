@@ -47,7 +47,7 @@ class ParticipantController extends Controller
             $entityManager->persist($participant);
             $entityManager->flush();
 
-            return $this->redirectToRoute('participant_index');
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('participant/new.html.twig', [

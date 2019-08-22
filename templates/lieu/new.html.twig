@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau lieu{% endblock %}
+
+{% block body %}
+
+    <h1>Nouveau lieu</h1>
+    <div class="row">
+        <div class="col-md-7">
+            {{ include('lieu/_form.html.twig') }}
+        </div>
+        <div class="col-md-5">
+            <img class="img-fluid" src="{{ asset('img/place.png') }}" alt="Créer une sortie">
+        </div>
+    </div>
+{% endblock %}
