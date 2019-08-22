@@ -105,19 +105,22 @@ class ParticipantController extends Controller
 
     /**
      * @Route("/{id}", name="participant_delete", methods={"DELETE"})
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_USER')")
      * @param Request $request
      * @param Participant $participant
      * @return Response
      */
     public function delete(Request $request, Participant $participant): Response
     {
+        if ($this->getUser()->getId() != $participant->getId()) {
+            return $this->redirectToRoute('participant_show', ["id" => $participant->getId()]);
+        }
         if ($this->isCsrfTokenValid('delete'.$participant->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($participant);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('participant_index');
+        return $this->redirectToRoute('home');
     }
 }
