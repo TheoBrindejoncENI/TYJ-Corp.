@@ -31,7 +31,9 @@
                                 </a></li>
                             {% if app.user %}
                                 <li class="nav-item active"><a class="nav-link"
-                                                               href="{{ path('participant_show', {'id': app.user.id}) }}">Mon profil <span class="sr-only"></span>
+                                                               href="{{ path('participant_show', {'id': app.user.id}) }}">
+                                        <img src="data:image/png;base64, {{ participant.image }}" class="rounded-circle" style="max-width: 1.5em">
+                                        Mon profil <span class="sr-only"></span>
                                     </a></li>
                                 {% if app.user.isAdmin %}
                                     <li class="nav-item dropdown">

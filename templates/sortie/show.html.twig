@@ -36,7 +36,9 @@
                 <tbody>
                 <tr>
                     <th>Organisé par</th>
-                    <td><a href="{{ path('participant_show', {'id': sortie.getOrganisateur().id}) }}">{{ sortie.getOrganisateur() }}</a></td>
+                    <td><img src="data:image/png;base64, {{ sortie.getOrganisateur().image }}" class="rounded-circle" style="max-width: 2em">
+
+                        <a href="{{ path('participant_show', {'id': sortie.getOrganisateur().id}) }}">{{ sortie.getOrganisateur() }}</a></td>
                 </tr>
                 <tr>
                     <th>Quand ?</th>
@@ -62,6 +64,7 @@
             <p>{{ sortie.infosSortie }}</p>
             <h4>Participants {% if sortie.getInscrits() %} ({{ sortie.getInscrits()|length }}) {% endif %}</h4>
             {% for participant in sortie.getInscrits() %}
+                <img src="data:image/png;base64, {{ participant.image }}" class="rounded-circle" style="max-width: 2em">
                 <a href="{{ path('participant_show', {'id': participant.id}) }}">{{ participant }}</a>
             {% else %}
                 <p>Aucun participant pour le moment !</p>

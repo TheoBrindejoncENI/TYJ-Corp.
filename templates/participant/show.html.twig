@@ -5,26 +5,38 @@
 {% block body %}
     <h1>Profil de {{ participant.prenom }} {{ participant.nom }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Nom</th>
-                <td>{{ participant.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ participant.prenom }}</td>
-            </tr>
-            <tr>
-                <th>Telephone</th>
-                <td>{{ participant.telephone }}</td>
-            </tr>
-            <tr>
-                <th>Adresse email</th>
-                <td>{{ participant.mail }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col">
+            <img src="data:image/png;base64, {{ participant.image }}" class="rounded-circle" style="max-width: 150px">
+        </div>
+        <div class="col-6">
+            <table class="table">
+                <tbody>
+
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ participant.nom }}</td>
+                </tr>
+                <tr>
+                    <th>Prenom</th>
+                    <td>{{ participant.prenom }}</td>
+                </tr>
+                <tr>
+                    <th>Telephone</th>
+                    <td>{{ participant.telephone }}</td>
+                </tr>
+                <tr>
+                    <th>Adresse email</th>
+                    <td>{{ participant.mail }}</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
     {% if app.user and participant.id == app.user.id %}
     <a class="btn btn-primary" href="{{ path('participant_edit', {'id': participant.id}) }}">Modifier</a>
     {% endif %}
