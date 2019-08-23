@@ -232,4 +232,12 @@ class Sortie
 
         return $this;
     }
+    public function getParticipantsByType(Type $type): Collection
+    {
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('type', $type))
+            ->orderBy('name');
+
+        return $this->participants->matching($criteria);
+    }
 }

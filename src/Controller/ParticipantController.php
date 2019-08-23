@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Participant;
 use App\Form\ParticipantType;
 use App\Repository\ParticipantRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +19,9 @@ class ParticipantController extends Controller
 {
     /**
      * @Route("/", name="participant_index", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN')")
+     * @param ParticipantRepository $participantRepository
+     * @return Response
      */
     public function index(ParticipantRepository $participantRepository): Response
     {
@@ -34,6 +38,9 @@ class ParticipantController extends Controller
      */
     public function new(Request $request, UserPasswordEncoderInterface $pwdEncoder): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('sortie_index');
+        }
         $participant = new Participant();
         $form = $this->createForm(ParticipantType::class, $participant);
         $form->handleRequest($request);
@@ -47,7 +54,7 @@ class ParticipantController extends Controller
             $entityManager->persist($participant);
             $entityManager->flush();
 
-            return $this->redirectToRoute('participant_index');
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('participant/new.html.twig', [
@@ -58,6 +65,9 @@ class ParticipantController extends Controller
 
     /**
      * @Route("/{id}", name="participant_show", methods={"GET"})
+     * @Security("is_granted('ROLE_USER')")
+     * @param Participant $participant
+     * @return Response
      */
     public function show(Participant $participant): Response
     {
@@ -68,16 +78,23 @@ class ParticipantController extends Controller
 
     /**
      * @Route("/{id}/edit", name="participant_edit", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_USER')")
+     * @param Request $request
+     * @param Participant $participant
+     * @return Response
      */
     public function edit(Request $request, Participant $participant): Response
     {
+        if ($this->getUser()->getId() != $participant->getId()) {
+            return $this->redirectToRoute('participant_show', ["id" => $participant->getId()]);
+        }
         $form = $this->createForm(ParticipantType::class, $participant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('participant_index');
+            return $this->redirectToRoute('participant_show', ["id" => $participant->getId()]);
         }
 
         return $this->render('participant/edit.html.twig', [
@@ -88,15 +105,22 @@ class ParticipantController extends Controller
 
     /**
      * @Route("/{id}", name="participant_delete", methods={"DELETE"})
+     * @Security("is_granted('ROLE_USER')")
+     * @param Request $request
+     * @param Participant $participant
+     * @return Response
      */
     public function delete(Request $request, Participant $participant): Response
     {
+        if ($this->getUser()->getId() != $participant->getId()) {
+            return $this->redirectToRoute('participant_show', ["id" => $participant->getId()]);
+        }
         if ($this->isCsrfTokenValid('delete'.$participant->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($participant);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('participant_index');
+        return $this->redirectToRoute('home');
     }
 }

@@ -2,10 +2,15 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
         <link href="https://fonts.googleapis.com/css?family=Farro&display=swap" rel="stylesheet">
         <script src="https://kit.fontawesome.com/bb0f7a1ce9.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
         <title>{% block title %}{% endblock %} - Sortir.com</title>
         {% block stylesheets %}{% endblock %}
     </head>
@@ -21,18 +26,24 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <ul class="navbar-nav ml-auto">
+                            <li class="nav-item active"><a class="nav-link"
+                                                           href="{{ path('sortie_index') }}">Les sorties <span class="sr-only"></span>
+                                </a></li>
                             {% if app.user %}
                                 <li class="nav-item active"><a class="nav-link"
                                                                href="{{ path('participant_show', {'id': app.user.id}) }}">Mon profil <span class="sr-only"></span>
                                     </a></li>
-
-                                <li class="nav-item active"><a class="nav-link"
-                                                               href="{{ path('sortie_index') }}">Les sorties <span class="sr-only"></span>
-                                    </a></li>
                                 {% if app.user.isAdmin %}
-                                <li class="nav-item active"><a class="nav-link"
-                                                               href="">Administration<span class="sr-only"></span>
-                                    </a></li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Administration
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" href="{{ path('ville_index') }}">Gérer les villes</a>
+                                            <a class="dropdown-item" href="{{ path('lieu_index') }}">Gérer les lieux</a>
+                                            <a class="dropdown-item" href="{{ path('site_index') }}">Gérer les sites</a>
+                                        </div>
+                                    </li>
                                 {% endif %}
                                 <li class="nav-item active"><a class="nav-link"
                                                                href="{{ path('logout') }}">Déconnexion <i class="fas fa-sign-out-alt"></i><span class="sr-only"></span>
@@ -57,14 +68,19 @@
         <div class="container sticky-offset">
             {% block body %}{% endblock %}
         </div>
-        {% block javascripts %}{% endblock %}
         <br />
         <footer class="custom-foot bg-secondary">
-            {% block footer %}
                 <div class="container">
                     <div class="text-center py-3 text-white">Copyright &copy; Sortir.com est une réalisation exceptionnelle de la TYJ Corp. Tous droits réservés.</div>
                 </div>
-            {% endblock %}
         </footer>
+        <script
+                src="https://code.jquery.com/jquery-3.4.1.min.js"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+                crossorigin="anonymous"></script>
+        <script
+                src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                crossorigin="anonymous"></script>
     </body>
 </html>
