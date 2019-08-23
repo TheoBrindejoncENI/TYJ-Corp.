@@ -29,6 +29,7 @@ class SortieController extends Controller
      */
     public function index(SortieRepository $sortieRepository,SiteRepository $siteRepository): Response
     {
+        $this->update();
         return $this->render('sortie/index.html.twig', [
             'sorties' => $sortieRepository->findAll(),
             'participant' => $this->getUser(),
@@ -66,6 +67,36 @@ class SortieController extends Controller
             'form' => $form->createView(),
             'participant' => $this->getUser(),
         ]);
+    }
+
+    /**
+     * @Route("/update", name="sortie_update", methods={"GET"})
+     */
+    public function update(): Response {
+        $entityManager = $this->getDoctrine()->getManager();
+        $etats = $this->getDoctrine()
+            ->getRepository(Etat::class)
+            ->findAll();
+        $etatCloturee = $etats[2];
+        $etatEnCours = $etats[3];
+        $etatPassee = $etats[4];
+        $sorties = $this->getDoctrine()
+            ->getRepository(Sortie::class)
+            ->findAll();
+        foreach ($sorties as $sortie) {
+            if (time() > $sortie->getDateLimiteInscription()->getTimestamp()) {
+                $sortie->setEtat($etatCloturee);
+            }
+            if (time() > $sortie->getDateHeureDebut()->getTimestamp()) {
+                $sortie->setEtat($etatEnCours);
+            }
+            if (time() > $sortie->getDateHeureDebut()->getTimestamp() + $sortie->getDuree() * 60) {
+                $sortie->setEtat($etatPassee);
+            }
+            $entityManager->persist($sortie);
+        }
+        $entityManager->flush();
+        return new Response("Update effectué",200);
     }
 
     /**

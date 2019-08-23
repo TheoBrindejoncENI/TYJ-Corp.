@@ -25,7 +25,7 @@
     {% elseif sortie.etat.id == 2 %}
         <span class="badge badge-success">{{ sortie.etat }}</span>
     {% elseif sortie.etat.id == 3 or sortie.etat.id == 4 %}
-        <span class="badge badge-success">{{ sortie.etat }}</span>
+        <span class="badge badge-warning">{{ sortie.etat }}</span>
     {% elseif sortie.etat.id == 5 or sortie.etat.id == 6 %}
         <span class="badge badge-danger">{{ sortie.etat }}</span>
     {% endif %}

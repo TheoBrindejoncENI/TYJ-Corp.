@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Sortons !!{% endblock %}
+{% block title %}Explorer les sorties{% endblock %}
 
 {% block body %}
     <script src="{{ asset('js/filterTable.js')}}"></script>
@@ -68,6 +68,7 @@
                 <th>Quand ?</th>
                 <th>Durée</th>
                 <th>Places</th>
+                <th>Etat</th>
                 <th></th>
             </tr>
         </thead>
@@ -78,6 +79,17 @@
                 <td>{{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('d/m/Y H:i') : '' }}</td>
                 <td>{{ sortie.duree }} min.</td>
                 <td>{{ sortie.inscrits|length}}/{{ sortie.nbInscriptionsMax ?? '&infin;' }}</td>
+                <td>
+                    {% if sortie.etat.id == 1 %}
+                        <span class="badge badge-info">{{ sortie.etat }}</span>
+                    {% elseif sortie.etat.id == 2 %}
+                        <span class="badge badge-success">{{ sortie.etat }}</span>
+                    {% elseif sortie.etat.id == 3 or sortie.etat.id == 4 %}
+                        <span class="badge badge-warning">{{ sortie.etat }}</span>
+                    {% elseif sortie.etat.id == 5 or sortie.etat.id == 6 %}
+                        <span class="badge badge-danger">{{ sortie.etat }}</span>
+                    {% endif %}
+                </td>
                 <td>
                     <a class="btn btn-sm btn-outline-primary" href="{{ path('sortie_show', {'id': sortie.id}) }}">Voir</a>
                 </td>
