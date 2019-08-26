@@ -1,7 +1,15 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-        <br>
-        <button class="btn btn-primary">{{ button_label|default('Envoyer') }}</button>
-        <br>
-        <br>
+
+{{ form_label(form.lieu) }}
+    <div class="row">
+        <div class="col-md-8">
+            {{ form_widget(form.lieu) }}
+        </div>
+        <div class="col-md-4">
+            <a href="{{ path('lieu_new') }}" class="btn btn-outline-primary">Nouveau lieu</a>
+        </div>
+    </div>
+{{ form_widget(form) }}
+    <br />
+    <button class="btn btn-primary">{{ button_label|default('Envoyer') }}</button>
 {{ form_end(form) }}

@@ -17,6 +17,8 @@ class SiteController extends Controller
 {
     /**
      * @Route("/", name="site_index", methods={"GET"})
+     * @param SiteRepository $siteRepository
+     * @return Response
      */
     public function index(SiteRepository $siteRepository): Response
     {
@@ -27,6 +29,8 @@ class SiteController extends Controller
 
     /**
      * @Route("/new", name="site_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -50,6 +54,8 @@ class SiteController extends Controller
 
     /**
      * @Route("/{id}", name="site_show", methods={"GET"})
+     * @param Site $site
+     * @return Response
      */
     public function show(Site $site): Response
     {
@@ -60,6 +66,9 @@ class SiteController extends Controller
 
     /**
      * @Route("/{id}/edit", name="site_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Site $site
+     * @return Response
      */
     public function edit(Request $request, Site $site): Response
     {
@@ -80,6 +89,9 @@ class SiteController extends Controller
 
     /**
      * @Route("/{id}", name="site_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Site $site
+     * @return Response
      */
     public function delete(Request $request, Site $site): Response
     {
