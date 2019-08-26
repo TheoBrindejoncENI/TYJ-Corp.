@@ -6,14 +6,17 @@
     <div class="float-right">
         {% if app.user %}
             {% if sortie.etat.id == 2 and app.user not in sortie.getInscrits() %}
-                <a class="btn btn-success" href="{{ path('sortie_join', {'id': sortie.id}) }}"><i class="fas fa-check"></i> Je m'inscris !</a>
+                <a class="btn btn-success" href="{{ path('sortie_join', {'id': sortie.id}) }}"><i
+                            class="fas fa-check"></i> Je m'inscris !</a>
             {% endif %}
             {% if app.user in sortie.getInscrits() %}
-                <a class="btn btn-danger" href="{{ path('sortie_leave', {'id': sortie.id}) }}"><i class="fas fa-times"></i> Je me désiste</a>
+                <a class="btn btn-danger" href="{{ path('sortie_leave', {'id': sortie.id}) }}"><i
+                            class="fas fa-times"></i> Je me désiste</a>
             {% endif %}
             {% if app.user.id == sortie.getOrganisateur().id %}
                 {% if sortie.getEtat().getId() == 1 %}
-                    <a class="btn btn-success" href="{{ path('sortie_publish', {'id': sortie.id}) }}">Publier la sortie</a>
+                    <a class="btn btn-success" href="{{ path('sortie_publish', {'id': sortie.id}) }}">Publier la
+                        sortie</a>
                 {% endif %}
                 <a class="btn btn-primary" href="{{ path('sortie_edit', {'id': sortie.id}) }}">Modifier la sortie</a>
             {% endif %}
@@ -29,14 +32,23 @@
     {% elseif sortie.etat.id == 5 or sortie.etat.id == 6 %}
         <span class="badge badge-danger">{{ sortie.etat }}</span>
     {% endif %}
-    <br /><br />
+    <br/><br/>
     <div class="row">
         <div class="col-md-6">
             <table class="table">
                 <tbody>
                 <tr>
                     <th>Organisé par</th>
-                    <td><a href="{{ path('participant_show', {'id': sortie.getOrganisateur().id}) }}">{{ sortie.getOrganisateur() }}</a></td>
+                    <td>
+                        <a href="{{ path('participant_show', {'id': sortie.getOrganisateur().id}) }}">
+                            <button type="button" class="btn btn-outline-primary p-2" style="border-radius: 2em">
+                                <img
+                                        src="data:image/png;base64, {{ sortie.getOrganisateur().image }}"
+                                        class="rounded-circle" style="max-width: 2em">
+                                {{ sortie.getOrganisateur() }}
+                                </button>
+                        </a>
+                    </td>
                 </tr>
                 <tr>
                     <th>Quand ?</th>
@@ -62,7 +74,13 @@
             <p>{{ sortie.infosSortie }}</p>
             <h4>Participants {% if sortie.getInscrits() %} ({{ sortie.getInscrits()|length }}) {% endif %}</h4>
             {% for participant in sortie.getInscrits() %}
-                <a href="{{ path('participant_show', {'id': participant.id}) }}">{{ participant }}</a>
+                <a href="{{ path('participant_show', {'id': participant.id}) }}">
+                    <button type="button" class="btn btn-outline-secondary m-1 p-2" style="border-radius: 2em"><img
+                                src="data:image/png;base64, {{ participant.image }}" class="rounded-circle"
+                                style="max-width: 2em">
+                        {{ participant }}</button>
+                </a>
+
             {% else %}
                 <p>Aucun participant pour le moment !</p>
             {% endfor %}
@@ -76,9 +94,10 @@
                     async defer></script>
             <script>
                 var map;
+
                 function initMap() {
                     map = new google.maps.Map(document.getElementById('map'), {
-                        center: {lat: {{sortie.getLieu().getLatitude()}}, lng: {{sortie.getLieu().getLongitude()}}},
+                        center: {lat: {{ sortie.getLieu().getLatitude() }}, lng: {{ sortie.getLieu().getLongitude() }}},
                         zoom: 14
                     });
                 }
@@ -86,8 +105,8 @@
         </div>
         <div class="col-md-6">
             <h4>Localisation</h4>
-            <p>{{sortie.getLieu()}}<br />{{ sortie.getLieu().getRue() }}<br />{{ sortie.getLieu().getVille() }}</p>
+            <p>{{ sortie.getLieu() }}<br/>{{ sortie.getLieu().getRue() }}<br/>{{ sortie.getLieu().getVille() }}</p>
         </div>
     </div>
-    <br />
+    <br/>
 {% endblock %}

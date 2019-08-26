@@ -10,7 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @Route("/participant")
@@ -50,6 +52,7 @@ class ParticipantController extends Controller
             $participant->setMotDePasse($pwd);
             $participant->setIsAdmin(false);
             $participant->setIsActif(true);
+            $participant->setImage(file_get_contents($form['image']->getData()));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($participant);
             $entityManager->flush();
@@ -81,9 +84,10 @@ class ParticipantController extends Controller
      * @Security("is_granted('ROLE_USER')")
      * @param Request $request
      * @param Participant $participant
+     * @param UserPasswordEncoderInterface $pwdEncoder
      * @return Response
      */
-    public function edit(Request $request, Participant $participant): Response
+    public function edit(Request $request, Participant $participant, UserPasswordEncoderInterface $pwdEncoder): Response
     {
         if ($this->getUser()->getId() != $participant->getId()) {
             return $this->redirectToRoute('participant_show', ["id" => $participant->getId()]);
@@ -92,6 +96,15 @@ class ParticipantController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if (!empty($form['motDePasse']->getData())) {
+                $pwd = $pwdEncoder->encodePassword($participant, $participant->getMotDePasse());
+                $participant->setMotDePasse($pwd);
+            }
+
+            if (!empty($form['image']->getData())) {
+                $participant->setImage(file_get_contents($form['image']->getData()));
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('participant_show', ["id" => $participant->getId()]);
@@ -108,9 +121,11 @@ class ParticipantController extends Controller
      * @Security("is_granted('ROLE_USER')")
      * @param Request $request
      * @param Participant $participant
+     * @param TokenStorageInterface $tokenStorage
+     * @param SessionInterface $session
      * @return Response
      */
-    public function delete(Request $request, Participant $participant): Response
+    public function delete(Request $request, Participant $participant, TokenStorageInterface $tokenStorage, SessionInterface $session): Response
     {
         if ($this->getUser()->getId() != $participant->getId()) {
             return $this->redirectToRoute('participant_show', ["id" => $participant->getId()]);
@@ -120,7 +135,8 @@ class ParticipantController extends Controller
             $entityManager->remove($participant);
             $entityManager->flush();
         }
-
+        $tokenStorage->setToken(null);
+        $session->invalidate();
         return $this->redirectToRoute('home');
     }
 }
