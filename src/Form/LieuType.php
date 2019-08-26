@@ -19,7 +19,7 @@ class LieuType extends AbstractType
             ->add('rue', TextType::class, ["attr" => ["class" => "form-control", "placeholder" => "Rue"]])
             ->add('latitude', NumberType::class, ["attr" => ["class" => "form-control", "placeholder" => "Latitude"]])
             ->add('longitude', NumberType::class, ["attr" => ["class" => "form-control", "placeholder" => "Longitude"]])
-            ->add('ville', null, ["attr" => ["class" => "form-control", "placeholder" => "Ville"]])
+            ->add('ville', null, ["attr" => ["class" => "form-control selectpicker", "data-live-search" => "true", "placeholder" => "Ville"]])
         ;
     }
 

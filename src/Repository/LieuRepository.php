@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Lieu;
+use App\Entity\Ville;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -19,22 +20,21 @@ class LieuRepository extends ServiceEntityRepository
         parent::__construct($registry, Lieu::class);
     }
 
-    // /**
-    //  * @return Lieu[] Returns an array of Lieu objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param Ville $ville
+     * @return Lieu[] Returns an array of Lieu objects
+     */
+
+    public function findAllByCity(Ville $ville)
     {
         return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('l.ville = :val')
+            ->setParameter('val', $ville->getId())
+            ->orderBy('l.nom', 'ASC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Lieu
