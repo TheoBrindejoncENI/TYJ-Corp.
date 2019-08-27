@@ -20,8 +20,23 @@ body {
 }
 
 .jumbotron {
-    background: rgb(0,212,255);
-    background: linear-gradient(90deg, rgb(36, 199, 132) 7%, rgb(173, 225, 231) 45%, rgba(255,255,255,1) 100%);
+    /*background: rgb(0,212,255);
+    background: linear-gradient(90deg, rgb(36, 199, 132) 7%, rgb(173, 225, 231) 45%, rgba(255,255,255,1) 100%);*/
+    background: linear-gradient(-45deg, rgb(36, 199, 132), rgb(173, 225, 231), rgb(36, 199, 132), rgb(55, 178, 199), rgb(159, 231, 187));
+    background-size: 400% 400%;
+    animation: gradientBG 12s ease infinite;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 #map {
