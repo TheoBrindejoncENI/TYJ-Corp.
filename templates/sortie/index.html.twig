@@ -75,7 +75,7 @@
         <tbody>
         {% for sortie in sorties %}
             <tr>
-                <td>{{ sortie.nom }}</td>
+                <td>{{ sortie.nom|capitalize }}</td>
                 <td>{{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('d/m/Y H:i') : '' }}</td>
                 <td>{{ sortie.duree }} min.</td>
                 <td>{{ sortie.inscrits|length}}/{{ sortie.nbInscriptionsMax ?? '&infin;' }}</td>
@@ -102,5 +102,6 @@
         </tbody>
     </table>
     <a class="btn btn-success" href="{{ path('sortie_new') }}">Créer une sortie</a>
+        <br><br><br>
     </div>
 {% endblock %}

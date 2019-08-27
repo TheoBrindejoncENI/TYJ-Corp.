@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ sortie.nom }}{% endblock %}
+{% block title %}{{ sortie.nom|capitalize }}{% endblock %}
 
 {% block body %}
     <div class="float-right">
@@ -22,7 +22,7 @@
             {% endif %}
         {% endif %}
     </div>
-    <h1>{{ sortie.nom }}</h1>
+    <h1>{{ sortie.nom|capitalize }}</h1>
     {% if sortie.etat.id == 1 %}
         <span class="badge badge-info">{{ sortie.etat }}</span>
     {% elseif sortie.etat.id == 2 %}
@@ -71,7 +71,7 @@
         </div>
         <div class="col-md-6">
             <h4>Détails</h4>
-            <p>{{ sortie.infosSortie }}</p>
+            <p>{{ sortie.infosSortie|capitalize }}</p>
             <h4>Participants {% if sortie.getInscrits() %} ({{ sortie.getInscrits()|length }}) {% endif %}</h4>
             {% for participant in sortie.getInscrits() %}
                 <a href="{{ path('participant_show', {'id': participant.id}) }}">
