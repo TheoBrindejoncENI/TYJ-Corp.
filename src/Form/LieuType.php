@@ -16,7 +16,7 @@ class LieuType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, ["attr" => ["class" => "form-control", "placeholder" => "Nom du lieu"]])
-            ->add('rue', TextType::class, ["attr" => ["class" => "form-control", "placeholder" => "Rue"]])
+            ->add('rue', TextType::class, ["attr" => ["class" => "form-control autocomplete", "placeholder" => "Rue"]])
             ->add('latitude', NumberType::class, ["attr" => ["class" => "form-control", "placeholder" => "Latitude"]])
             ->add('longitude', NumberType::class, ["attr" => ["class" => "form-control", "placeholder" => "Longitude"]])
             ->add('ville', null, ["attr" => ["class" => "form-control selectpicker", "data-live-search" => "true", "placeholder" => "Ville"]])

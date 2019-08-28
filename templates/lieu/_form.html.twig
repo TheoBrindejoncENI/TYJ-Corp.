@@ -1,5 +1,41 @@
-{{ form_start(form) }}
+{{ form_start(form, { 'attr': {'autocomplete': 'off'} }) }}
     {{ form_widget(form) }}
-    <br />
-    <button class="btn btn-success">{{ button_label|default('Sauvegarder') }}</button>
+<br/>
+<button class="btn btn-success">{{ button_label|default('Sauvegarder') }}</button>
+
+
+<script>
+
+    $("#lieu_rue").keyup(function () {
+        $("#lieu_rue").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "https://api-adresse.data.gouv.fr/search/?",
+                        data: {q: $("#lieu_rue").val() + " " + $("#lieu_ville :selected").text()},
+                        dataType: "json",
+                        success: function (data) {
+                            console.log(request);
+                            response($.map(data.features, function (item) {
+                                console.log(item);
+                                return {
+                                    label : item.properties.name,
+                                    value : item.properties.name,
+                                    latitude : item.geometry.coordinates[1],
+                                    longitude : item.geometry.coordinates[0],
+                                };
+                            }));
+                        }
+                    });
+                },
+            // coordonnées GPS
+            select: function(event, ui) {
+                    console.log(ui);
+                $('#lieu_latitude').val(ui.item.latitude);
+                $('#lieu_longitude').val(ui.item.longitude);
+
+            }
+            }
+        );
+    });
+</script>
 {{ form_end(form) }}
