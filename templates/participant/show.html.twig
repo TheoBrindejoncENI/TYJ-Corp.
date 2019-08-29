@@ -5,11 +5,11 @@
 {% block body %}
 
 
-    <div class="row align-top text-center mt-3">
+    <div class="row align-top text-center mb-3">
 
         <div class="col">
 
-            <div class="card text-center" style="min-width: 18rem">
+            <div class="card text-center mb-2" style="min-width: 18rem">
                 <div class="card-header"
                      style="background-image: url('{{ asset('img/bg_profile.jpg') }}'); background-size: cover;">
                     <img src="data:image/png;base64, {{ participant.image }}"
@@ -61,7 +61,7 @@
                 </div>
             </div>
 
-            <div class="mt-4">
+            <div class="mt-4 mb-4">
             {% if app.user and participant.id == app.user.id %}
                     <a class="btn-lg shadow-sm text-decoration-none text-secondary"
                        href="{{ path('participant_edit', {'id': participant.id}) }}"><i class="far fa-edit"></i> Modifier</a>
