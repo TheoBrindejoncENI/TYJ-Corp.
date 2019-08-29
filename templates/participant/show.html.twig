@@ -11,7 +11,7 @@
 
             <div class="card text-center" style="min-width: 18rem">
                 <div class="card-header"
-                     style="background-image: url('https://unsplash.com/photos/VLdaxYyXJvw/download?force=true'); background-size: cover;">
+                     style="background-image: url('{{ asset('img/bg_profile.jpg') }}'); background-size: cover;">
                     <img src="data:image/png;base64, {{ participant.image }}"
                          class="card-img-top rounded-circle m-3"
                          style="max-width: 150px; border:5px solid #FFF;">
@@ -29,37 +29,29 @@
                         <span class="badge badge-secondary badge-pill">{{ participant.sorties.count() }}</span>
                     </li>
                 </ul>
-
-                {% if app.user and participant.id == app.user.id %}
-                    <div class="card-body m-2">
-                        <a class="btn btn-primary"
-                           href="{{ path('participant_edit', {'id': participant.id}) }}">Modifier</a>
-                    </div>
-                {% endif %}
             </div>
         </div>
         <div class="col">
+
             <div class="card">
-                <div class="card-body">
-
-
-                    <table class="table">
+                <div class="card-body p-4">
+                    <table class="table table-borderless table-hover ">
                         <tbody>
 
                         <tr>
-                            <th>Nom</th>
+                            <th class="text-left">Nom</th>
                             <td>{{ participant.nom }}</td>
                         </tr>
                         <tr>
-                            <th>Prenom</th>
+                            <th class="text-left">Prenom</th>
                             <td>{{ participant.prenom }}</td>
                         </tr>
                         <tr>
-                            <th>Telephone</th>
+                            <th class="text-left">Telephone</th>
                             <td>{{ participant.telephone }}</td>
                         </tr>
                         <tr>
-                            <th>Adresse email</th>
+                            <th class="text-left">Adresse email</th>
                             <td>{{ participant.mail }}</td>
                         </tr>
 
@@ -68,12 +60,19 @@
 
                 </div>
             </div>
+
+            <div class="mt-4">
+            {% if app.user and participant.id == app.user.id %}
+                    <a class="btn-lg shadow-sm text-decoration-none text-secondary"
+                       href="{{ path('participant_edit', {'id': participant.id}) }}"><i class="far fa-edit"></i> Modifier</a>
+            {% endif %}
+            </div>
         </div>
 
     </div>
 
 
-    {#    Laisser cette dive tranquille#}
+    {#    Laisser cette div tranquille#}
     </div>
 
 
