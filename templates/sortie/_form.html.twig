@@ -1,5 +1,6 @@
 {{ form_start(form) }}
-
+{{ form_row(form.ville) }}
+{% if form.lieu is defined %}
 {{ form_label(form.lieu) }}
     <div class="row">
         <div class="col-md-8">
@@ -9,7 +10,34 @@
             <a href="{{ path('lieu_new') }}" class="btn btn-outline-primary">Nouveau lieu</a>
         </div>
     </div>
+{% endif %}
 {{ form_widget(form) }}
     <br />
-    <button class="btn btn-primary">{{ button_label|default('Envoyer') }}</button>
+    <button class="btn btn-primary" type="submit">{{ button_label|default('Envoyer') }}</button>
+    <script>
+        $(document).on('turbolinks:load', function() {
+            $(this).trigger('load.bs.select.data-api');
+        });
+        $(document).ready(function() {
+            $('.selectVille').selectpicker();
+            $('.selectLieu').selectpicker();
+        });
+        $(document).on('change', '#sortie_ville', function () {
+            let $villeField = $('#sortie_ville');
+            let $form = $villeField.closest('form');
+            let $lieuField = $('#sortie_lieu');
+            // Les données à envoyer en Ajax
+            let data = {};
+            data[$villeField.attr('name')] = $villeField.val();
+            // On soumet les données
+            $.post($form.attr('action'), data).then(function (data) {
+                // On récupère le nouveau <select>
+                let $input = $(data).find('#sortie_lieu');
+                // On remplace notre <select> actuel
+                $(".selectLieu").selectpicker("destroy");
+                $lieuField.replaceWith($input);
+                $('.selectLieu').selectpicker();
+            })
+        });
+    </script>
 {{ form_end(form) }}

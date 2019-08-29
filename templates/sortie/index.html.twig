@@ -60,8 +60,8 @@
             </div>
         </div>
     </div>
-    <div class="container">
-    <table class="table" id="sortieTable" name="sortieTable" >
+    <div class="container mb-5">
+    <table class="table table-responsive-sm" id="sortieTable" name="sortieTable" >
         <thead>
             <tr>
                 <th>Quoi ?</th>
@@ -75,7 +75,7 @@
         <tbody>
         {% for sortie in sorties %}
             <tr>
-                <td>{{ sortie.nom }}</td>
+                <td>{{ sortie.nom|capitalize }}</td>
                 <td>{{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('d/m/Y H:i') : '' }}</td>
                 <td>{{ sortie.duree }} min.</td>
                 <td>{{ sortie.inscrits|length}}/{{ sortie.nbInscriptionsMax ?? '&infin;' }}</td>
@@ -91,7 +91,7 @@
                     {% endif %}
                 </td>
                 <td>
-                    <a class="btn btn-sm btn-outline-primary" href="{{ path('sortie_show', {'id': sortie.id}) }}">Voir</a>
+                    <a class="btn btn-sm btn-outline-primary shadow-sm" href="{{ path('sortie_show', {'id': sortie.id}) }}">Voir</a>
                 </td>
             </tr>
         {% else %}
@@ -101,6 +101,9 @@
         {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-success" href="{{ path('sortie_new') }}">Créer une sortie</a>
+        <div  class="mb-5 mt-2" >
+            <a class="btn btn-success shadow-sm mb-5" href="{{ path('sortie_new') }}">Créer une sortie</a>
+        </div>
+
     </div>
 {% endblock %}

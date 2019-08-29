@@ -3,29 +3,78 @@
 {% block title %}Participant{% endblock %}
 
 {% block body %}
-    <h1>Profil de {{ participant.prenom }} {{ participant.nom }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Nom</th>
-                <td>{{ participant.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ participant.prenom }}</td>
-            </tr>
-            <tr>
-                <th>Telephone</th>
-                <td>{{ participant.telephone }}</td>
-            </tr>
-            <tr>
-                <th>Adresse email</th>
-                <td>{{ participant.mail }}</td>
-            </tr>
-        </tbody>
-    </table>
-    {% if app.user and participant.id == app.user.id %}
-    <a class="btn btn-primary" href="{{ path('participant_edit', {'id': participant.id}) }}">Modifier</a>
-    {% endif %}
+
+    <div class="row align-top text-center mt-3">
+
+        <div class="col">
+
+            <div class="card text-center" style="min-width: 18rem">
+                <div class="card-header"
+                     style="background-image: url('https://unsplash.com/photos/VLdaxYyXJvw/download?force=true'); background-size: cover;">
+                    <img src="data:image/png;base64, {{ participant.image }}"
+                         class="card-img-top rounded-circle m-3"
+                         style="max-width: 150px; border:5px solid #FFF;">
+                </div>
+                <div class="card-body m-2">
+                    <h5 class="card-title"><span
+                                class="badge badge-pill badge-{{ participant.isActif ? 'success' : 'warning' }}"> </span> {{ participant.prenom }} {{ participant.nom }}
+                    </h5>
+                    Membre de {{ participant.site }}
+                </div>
+
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <h6>{{ participant.sorties.count()>1?' Sorties proposées':' Sortie proposée' }} :</h6>
+                        <span class="badge badge-secondary badge-pill">{{ participant.sorties.count() }}</span>
+                    </li>
+                </ul>
+
+                {% if app.user and participant.id == app.user.id %}
+                    <div class="card-body m-2">
+                        <a class="btn btn-primary"
+                           href="{{ path('participant_edit', {'id': participant.id}) }}">Modifier</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+
+
+                    <table class="table">
+                        <tbody>
+
+                        <tr>
+                            <th>Nom</th>
+                            <td>{{ participant.nom }}</td>
+                        </tr>
+                        <tr>
+                            <th>Prenom</th>
+                            <td>{{ participant.prenom }}</td>
+                        </tr>
+                        <tr>
+                            <th>Telephone</th>
+                            <td>{{ participant.telephone }}</td>
+                        </tr>
+                        <tr>
+                            <th>Adresse email</th>
+                            <td>{{ participant.mail }}</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    {#    Laisser cette dive tranquille#}
+    </div>
+
+
 {% endblock %}

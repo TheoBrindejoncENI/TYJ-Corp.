@@ -128,6 +128,8 @@ class SortieController extends Controller
             ->getRepository(Etat::class)
             ->find(2); //ouverte
         $sortie->setEtat($etat);
+        //on inscrit l'orga par defaut
+        $sortie->addInscrit($this->getUser());
         $this->getDoctrine()->getManager()->flush();
         return $this->render('sortie/show.html.twig', [
             'sortie' => $sortie,
@@ -143,6 +145,14 @@ class SortieController extends Controller
     public function join(Sortie $sortie): Response
     {
         if ($this->getUser()) {
+            if ($sortie->getInscrits()->count() >= $sortie->getNbInscriptionsMax()) {
+                $this->addFlash(
+                    'warning',
+                    sprintf('Dommage %s ... Il n\'y à plus de place pour cette sortie', $this->getUser()->getPrenom()));
+                return $this->render('sortie/show.html.twig', [
+                    'sortie' => $sortie,
+                ]);
+            }
             $sortie->addInscrit($this->getUser());
             $this->getDoctrine()->getManager()->flush();
         }

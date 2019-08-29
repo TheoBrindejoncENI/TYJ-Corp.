@@ -19,20 +19,37 @@ class SortieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
-    // /**
-    //  * @return Sortie[] Returns an array of Sortie objects
-    //  */
+    /**
+     * @return Sortie[] Returns an array of Sortie objects
+     */
 
-    public function findByExampleField($value)
+    public function findByParameters($parameters)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $query = $this->createQueryBuilder('s')
+            ->andWhere('s.site_id = :site')
+            ->setParameter('val', $parameters['site']);
+        if (isset($parameters['search'])) {
+            $query->andWhere('s.nom like %:search%')
+                ->setParameter('search', $parameters['search']);
+        }
+        if (isset($parameters['dateDebut']) && isset($parameters['dateFin'])) {
+            $query->andWhere('s.date_heure_debut between :dateDebut and :dateFin')
+                ->setParameter('dateDebut', $parameters['dateDebut'])
+                ->setParameter('dateFin', $parameters['dateFin']);
+        }
+        if (isset($parameters['orga'])) {
+            $query->andWhere('s.organisateur_id = :orga')
+                ->setParameter('orga', $parameters['orga']);
+        }
+        if (isset($parameters['passee'])) {
+            $query->andWhere('s.etat = :passee')
+                ->setParameter('passee', $parameters['passee']);
+        }
+        return $this->queryResult($query);
+    }
+
+    public function queryResult($query) {
+        return $query->getQuery()->getResult();
     }
 
 

@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Participant;
+use Doctrine\DBAL\Types\BlobType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -23,6 +25,8 @@ class ParticipantType extends AbstractType
             ->add('mail', EmailType::class, ["attr" => ["class" => "form-control", "placeholder" => "Votre adresse email"]])
             ->add('motDePasse', PasswordType::class, ["attr" => ["class" => "form-control", "placeholder" => "Votre mot de passe"]])
             ->add('site', null, ["attr" => ["class" => "form-control"]])
+            ->add('image', FileType::class, ['data_class' => null,
+                                                        "attr" => ["class" => "custom-file", "placeholder" => "Votre avatar"]])
         ;
     }
 
