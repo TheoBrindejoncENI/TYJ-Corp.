@@ -128,6 +128,8 @@ class SortieController extends Controller
             ->getRepository(Etat::class)
             ->find(2); //ouverte
         $sortie->setEtat($etat);
+        //on inscrit l'orga par defaut
+        $sortie->addInscrit($this->getUser());
         $this->getDoctrine()->getManager()->flush();
         return $this->render('sortie/show.html.twig', [
             'sortie' => $sortie,
