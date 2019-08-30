@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use App\Filter\SortieFilterType;
 
 
 /**
@@ -22,18 +22,47 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends Controller
 {
     /**
-     * @Route("/", name="sortie_index", methods={"GET"})
+     * @Route("/", name="sortie_index", methods={"GET","POST"})
      * @param SortieRepository $sortieRepository
      * @param SiteRepository $siteRepository
+     * @param Request $request
      * @return Response
      */
-    public function index(SortieRepository $sortieRepository,SiteRepository $siteRepository): Response
+
+    public function index(SortieRepository $sortieRepository,SiteRepository $siteRepository, Request $request): Response
     {
         $this->update();
+        if ($request->get('site')) {
+            $parameters['site'] = $request->get('site') ?? '';
+            $parameters['search'] = $request->get('search') ?? '';
+            $parameters['dateDebut'] = $request->get('dateDebut') ?? '';
+            $parameters['dateFin'] = $request->get('dateFin') ?? '';
+            $parameters['orga'] = $request->get('orga') == 'on';
+            $parameters['passee'] = $request->get('passee') == 'on';
+            $parameters['user'] = $this->getUser();
+            $sorties = $sortieRepository->findByParameters($parameters);
+        } else {
+            $sorties = $sortieRepository->findBySite($this->getUser()->getSite());
+        }
+        if ($request->get('inscrit')) {
+            foreach ($sorties as $sortie) {
+                if ($sortie->getInscrits()->contains($this->getUser())) {
+                    $sorties2[] = $sortie;
+                }
+            }
+            $sorties = $sorties2;
+        }
+        if ($request->get('pasinscrit')) {
+            foreach ($sorties as $sortie) {
+                if (!$sortie->getInscrits()->contains($this->getUser())) {
+                    $sorties2[] = $sortie;
+                }
+            }
+            $sorties = $sorties2;
+        }
         return $this->render('sortie/index.html.twig', [
-            'sorties' => $sortieRepository->findAll(),
-            'participant' => $this->getUser(),
-            'sites' => $siteRepository->findAll(),
+            'sorties' => $sorties,
+            'sites' => $siteRepository->findAll()
         ]);
     }
 
@@ -68,6 +97,7 @@ class SortieController extends Controller
             'participant' => $this->getUser(),
         ]);
     }
+
 
     /**
      * @Route("/update", name="sortie_update", methods={"GET"})
