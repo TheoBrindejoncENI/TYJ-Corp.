@@ -28,24 +28,32 @@ class SortieRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('s')
             ->andWhere('s.site = :site')
             ->setParameter('site', $parameters['site']);
-        if (isset($parameters['search'])) {
+        if (!empty($parameters['search'])) {
             $query->andWhere('s.nom like :search')
-                ->setParameter('search', $parameters['search']);
+                ->setParameter('search', '%' . $parameters['search'] . '%');
         }
-        if (isset($parameters['dateDebut']) && isset($parameters['dateFin'])) {
-            $query->andWhere('s.date_heure_debut between :dateDebut and :dateFin')
-                ->setParameter('dateDebut', $parameters['dateDebut'])
-                ->setParameter('dateFin', $parameters['dateFin']);
+        if (!empty($parameters['dateDebut']) && !empty($parameters['dateFin'])) {
+            $query->andWhere('s.dateHeureDebut between :dateDebut and :dateFin')
+                ->setParameter('dateDebut', date('Y-d-m', strtotime($parameters['dateDebut'])))
+                ->setParameter('dateFin', date('Y-d-m', strtotime($parameters['dateFin'])));
         }
-     /*  if (isset($parameters['orga'])) {
+       if ($parameters['orga']) {
             $query->andWhere('s.organisateur = :orga')
-                ->setParameter('orga', $parameters['orga']);
-        }*/
-        if (isset($parameters['passee'])) {
-            $query->andWhere('s.etat = :passee')
-                ->setParameter('passee', $parameters['passee']);
+                ->setParameter('orga', $parameters['user']);
+        }
+        if ($parameters['passee']) {
+            $query->andWhere('s.etat = 5');
+        } else {
+            $query->andWhere('s.etat != 5');
         }
         return $query->getQuery()->getResult();
+    }
+
+    public function findBySite($site) {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.site = :site')
+            ->andWhere('s.etat != 5')
+            ->setParameter('site', $site->getId())->getQuery()->getResult();
     }
 
     public function queryResult($val) {

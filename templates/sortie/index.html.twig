@@ -6,50 +6,42 @@
     <script src="{{ asset('js/filterTable.js')}}"></script>
     
     <h1>Explorer les sorties</h1>
-    <br>
-    <h3>Filtrez les sorties :</h3>
-    <br>
-    {{form_start(form)}}
-    {{form_widget(form)}}
-    {{form_end(form)}}
-    <!--
-    <div class="row">
-            <div class="col">
+    <form action="{{ path('sortie_index') }}" method="get">
+        <div class="row">
+            <div class="col-md-6">
+                <br>
                 <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" for="inputGroupSelect01">Site :</span>
+                        <span class="input-group-text" for="inputGroupSelect01">Site</span>
                     </div>
-                    <select class="custom-select" id="searchSite" aria-label="Cherchez sur un site" id="inputGroupSelect01">
-                    {% for site in sites %}
-                            <option {{ app.user and app.user.site.id == site.id ? "selected" : "" }}>{{ site.nom }}</option>
-                    {% else %}
-                        <option>Pas de site</option>
-                    {% endfor %}
+                    <select class="custom-select" id="searchSite" name="site" aria-label="Cherchez sur un site" id="inputGroupSelect01">
+                        {% for site in sites %}
+                            <option value="{{site.id}}" {{ app.user and app.user.site.id == site.id ? "selected" : "" }}>{{ site.nom }}</option>
+                        {% else %}
+                            <option>Pas de site</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="input-group input-group-sm mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Sortie :</span>
-                    </div>
-                        <input type="text" class="form-control" name="searchInput" id="searchInput" onkeyup="searchinTable()" aria-label="Cherchez une sortie" aria-describedby="inputGroup-sizing-sm">
+                    <input placeholder="Rechercher..." type="text" class="form-control" value="{{ app.request.get('search') }}" name="search" id="searchInput"  aria-label="Cherchez une sortie" aria-describedby="inputGroup-sizing-sm">
                 </div>
                 <div class='row'>
-                    <div class='col'>
+                    <div class='col-md-6'>
                         <span>De :</span>
                         <div class="form-group">
-                        <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker7"/>
+                            <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker7" name="dateDebut" value="{{ app.request.get('dateDebut') }}"/>
                                 <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class='col'>
+                    <div class='col-md-6'>
                         <span>à</span>
                         <div class="form-group">
-                        <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker8"/>
+                            <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker8" name="dateFin" value="{{ app.request.get('dateFin') }}"/>
                                 <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
@@ -57,14 +49,36 @@
                         </div>
                     </div>
                 </div>
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('#datetimepicker7').datetimepicker({
+                            locale: 'fr',
+                            format: 'L'
+                        });
+                        $('#datetimepicker8').datetimepicker({
+                            locale: 'fr',
+                            format: 'L'
+                        });
+                    });
+                </script>
             </div>
-                <div class="col">
-                    
-                </div>
+            <div class="col-md-6">
+                <label for="orga">Sorties dont je suis l'organisateur</label>
+                <input {{ app.request.get('orga') ? 'checked' : '' }} id="orga" type="checkbox" name="orga" />
+                <br>
+                <label for="inscrit">Sorties auxquelles je suis inscrit</label>
+                <input {{ app.request.get('inscrit') ? 'checked' : '' }} id="inscrit" type="checkbox" name="inscrit" />
+                <br>
+                <label for="pasinscrit">Sorties auxquelles je ne suis pas inscrit</label>
+                <input {{ app.request.get('pasinscrit') ? 'checked' : '' }} id="pasinscrit" type="checkbox" name="pasinscrit" />
+                <br>
+                <label for="passee">Sorties passées</label>
+                <input {{ app.request.get('passee') ? 'checked' : '' }} id="passee" type="checkbox" name="passee" />
             </div>
         </div>
-    </div>
-    -->
+        <button type="submit" class="btn btn-success">Rechercher</button>
+    </form>
+    <br>
     <div class="container mb-5">
     <table class="table table-responsive-sm" id="sortieTable" name="sortieTable" >
         <thead>

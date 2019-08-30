@@ -32,19 +32,37 @@ class SortieController extends Controller
     public function index(SortieRepository $sortieRepository,SiteRepository $siteRepository, Request $request): Response
     {
         $this->update();
-        $form = $this->createForm(SortieFilterType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getRepository(Sortie::class)->findByParameters($form);
-
-            return $this->redirectToRoute('sortie_index');
+        if ($request->get('site')) {
+            $parameters['site'] = $request->get('site') ?? '';
+            $parameters['search'] = $request->get('search') ?? '';
+            $parameters['dateDebut'] = $request->get('dateDebut') ?? '';
+            $parameters['dateFin'] = $request->get('dateFin') ?? '';
+            $parameters['orga'] = $request->get('orga') == 'on';
+            $parameters['passee'] = $request->get('passee') == 'on';
+            $parameters['user'] = $this->getUser();
+            $sorties = $sortieRepository->findByParameters($parameters);
+        } else {
+            $sorties = $sortieRepository->findBySite($this->getUser()->getSite());
+        }
+        if ($request->get('inscrit')) {
+            foreach ($sorties as $sortie) {
+                if ($sortie->getInscrits()->contains($this->getUser())) {
+                    $sorties2[] = $sortie;
+                }
+            }
+            $sorties = $sorties2;
+        }
+        if ($request->get('pasinscrit')) {
+            foreach ($sorties as $sortie) {
+                if (!$sortie->getInscrits()->contains($this->getUser())) {
+                    $sorties2[] = $sortie;
+                }
+            }
+            $sorties = $sorties2;
         }
         return $this->render('sortie/index.html.twig', [
-            'sorties' => $sortieRepository->findAll(),
-            'participant' => $this->getUser(),
-            'sites' => $siteRepository->findAll(),
-            'form' => $form->createView(),
+            'sorties' => $sorties,
+            'sites' => $siteRepository->findAll()
         ]);
     }
 
