@@ -45,6 +45,7 @@ class SortieController extends Controller
             $sorties = $sortieRepository->findBySite($this->getUser()->getSite());
         }
         if ($request->get('inscrit')) {
+            $sorties2 = [];
             foreach ($sorties as $sortie) {
                 if ($sortie->getInscrits()->contains($this->getUser())) {
                     $sorties2[] = $sortie;
@@ -53,6 +54,7 @@ class SortieController extends Controller
             $sorties = $sorties2;
         }
         if ($request->get('pasinscrit')) {
+            $sorties2 = [];
             foreach ($sorties as $sortie) {
                 if (!$sortie->getInscrits()->contains($this->getUser())) {
                     $sorties2[] = $sortie;
