@@ -81,3 +81,14 @@ label {
 .ui-helper-hidden-accessible {
     display: none;
 }
+
+.error-header {
+    color: black;  /* Fallback: assume this color ON TOP of image */
+    background: url('https://cdn.arstechnica.net/wp-content/uploads/2014/09/Sagittarius-star-forming-640x320.jpg');
+    background-size: cover;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10rem;
+}
