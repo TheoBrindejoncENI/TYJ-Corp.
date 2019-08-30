@@ -49,28 +49,17 @@
                         </div>
                     </div>
                 </div>
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        $('#datetimepicker7').datetimepicker({
-                            locale: 'fr',
-                            format: 'L'
-                        });
-                        $('#datetimepicker8').datetimepicker({
-                            locale: 'fr',
-                            format: 'L'
-                        });
-                    });
-                </script>
+
             </div>
             <div class="col-md-6">
                 <label for="orga">Sorties dont je suis l'organisateur</label>
                 <input {{ app.request.get('orga') ? 'checked' : '' }} id="orga" type="checkbox" name="orga" />
                 <br>
                 <label for="inscrit">Sorties auxquelles je suis inscrit</label>
-                <input {{ app.request.get('inscrit') ? 'checked' : '' }} id="inscrit" type="checkbox" name="inscrit" />
+                <input {{ app.request.get('inscrit') ? 'checked' : '' }} id="inscrit" type="checkbox" name="inscrit" onclick=uncheck("pasinscrit") />
                 <br>
                 <label for="pasinscrit">Sorties auxquelles je ne suis pas inscrit</label>
-                <input {{ app.request.get('pasinscrit') ? 'checked' : '' }} id="pasinscrit" type="checkbox" name="pasinscrit" />
+                <input {{ app.request.get('pasinscrit') ? 'checked' : '' }} id="pasinscrit" type="checkbox" name="pasinscrit" onclick=uncheck("inscrit") />
                 <br>
                 <label for="passee">Sorties passées</label>
                 <input {{ app.request.get('passee') ? 'checked' : '' }} id="passee" type="checkbox" name="passee" />
@@ -78,6 +67,32 @@
         </div>
         <button type="submit" class="btn btn-success">Rechercher</button>
     </form>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datetimepicker7').datetimepicker({
+                locale: 'fr',
+                format: 'L'
+            });
+            $('#datetimepicker8').datetimepicker({
+                locale: 'fr',
+                format: 'L'
+            });
+        });
+        document.getElementById('inscrit').onclick = function() {
+            // access properties using this keyword
+            if ( this.checked ) {
+                // Returns true if checked
+                document.getElementById('pasinscrit').checked = false;
+            }
+        };
+        document.getElementById('pasinscrit').onclick = function() {
+            // access properties using this keyword
+            if ( this.checked ) {
+                // Returns true if checked
+                document.getElementById('inscrit').checked = false;
+            }
+        };
+    </script>
     <br>
     <div class="container mb-5">
     <table class="table table-responsive-sm" id="sortieTable" name="sortieTable" >
