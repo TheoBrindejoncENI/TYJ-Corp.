@@ -26,10 +26,10 @@ class SortieRepository extends ServiceEntityRepository
     public function findByParameters($parameters)
     {
         $query = $this->createQueryBuilder('s')
-            ->andWhere('s.site_id = :site')
-            ->setParameter('val', $parameters['site']);
+            ->andWhere('s.site = :site')
+            ->setParameter('site', $parameters['site']);
         if (isset($parameters['search'])) {
-            $query->andWhere('s.nom like %:search%')
+            $query->andWhere('s.nom like :search')
                 ->setParameter('search', $parameters['search']);
         }
         if (isset($parameters['dateDebut']) && isset($parameters['dateFin'])) {
@@ -37,19 +37,19 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('dateDebut', $parameters['dateDebut'])
                 ->setParameter('dateFin', $parameters['dateFin']);
         }
-        if (isset($parameters['orga'])) {
-            $query->andWhere('s.organisateur_id = :orga')
+     /*  if (isset($parameters['orga'])) {
+            $query->andWhere('s.organisateur = :orga')
                 ->setParameter('orga', $parameters['orga']);
-        }
+        }*/
         if (isset($parameters['passee'])) {
             $query->andWhere('s.etat = :passee')
                 ->setParameter('passee', $parameters['passee']);
         }
-        return $this->queryResult($query);
+        return $query->getQuery()->getResult();
     }
 
-    public function queryResult($query) {
-        return $query->getQuery()->getResult();
+    public function queryResult($val) {
+        return $val->getQuery()->getResult();
     }
 
 

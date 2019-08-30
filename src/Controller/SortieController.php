@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use App\Filter\SortieFilterType;
 
 
 /**
@@ -22,18 +22,29 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends Controller
 {
     /**
-     * @Route("/", name="sortie_index", methods={"GET"})
+     * @Route("/", name="sortie_index", methods={"GET","POST"})
      * @param SortieRepository $sortieRepository
      * @param SiteRepository $siteRepository
+     * @param Request $request
      * @return Response
      */
-    public function index(SortieRepository $sortieRepository,SiteRepository $siteRepository): Response
+
+    public function index(SortieRepository $sortieRepository,SiteRepository $siteRepository, Request $request): Response
     {
         $this->update();
+        $form = $this->createForm(SortieFilterType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getRepository(Sortie::class)->findByParameters($form);
+
+            return $this->redirectToRoute('sortie_index');
+        }
         return $this->render('sortie/index.html.twig', [
             'sorties' => $sortieRepository->findAll(),
             'participant' => $this->getUser(),
             'sites' => $siteRepository->findAll(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -68,6 +79,7 @@ class SortieController extends Controller
             'participant' => $this->getUser(),
         ]);
     }
+
 
     /**
      * @Route("/update", name="sortie_update", methods={"GET"})
